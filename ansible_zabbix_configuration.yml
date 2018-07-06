@@ -1,0 +1,14 @@
+---
+- hosts: all
+  remote_user: root
+  vars:
+    zabbix_server: "192.168.84.132"
+  sudo: yes
+  tasks:
+  #You should have rpm package in the / dir
+      - name: cp zabbix-agent-3.4.0-1.el7.x86_64.rpm
+        copy: src=/zabbix-agent-3.4.0-1.el7.x86_64.rpm dest=/opt/zabbix-agent-3.4.0-1.el7.x86_64.rpm
+      - name: install zabbix repo
+        command: "rpm -i /opt/zabbix-agent-3.4.0-1.el7.x86_64.rpm"
+       - name: copy zabbix configuration file
+         copy: src=/zabbix_agentd.conf dest=/etc/zabbix/zabbix_agentd.conf seuser=system_u
